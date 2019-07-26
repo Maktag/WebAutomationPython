@@ -4,9 +4,10 @@ from shutil import copyfile
 from replib.config import Config as r_info
 import time
 import pyscreenshot as ImageGrab
-
+import json
 from replib.createHtml import Prepare_report
 from replib.module_page_creation import module_page_create
+from termcolor import colored
 
 
 class Status:
@@ -60,6 +61,7 @@ class Status:
 
     def pass_test(self, tc_id, tc_Message, *save_screenshot):
         self.passCases.append(tc_id)
+        print(colored(' -> Passed\n', 'blue'))
         if tc_id not in self.test_case_with_result.keys():
             self.test_case_with_result[tc_id] = tc_Message+'_P'
             for ar in save_screenshot:
@@ -72,6 +74,7 @@ class Status:
 
     def fail_test(self, tc_id, tc_Message, *save_screenshot):
         self.failCases.append(tc_id)
+        print(colored(' -> Failed\n', 'red'))
         self.test_case_with_result[tc_id] = tc_Message+'_F'
         for ar in save_screenshot:
             if ar == 'T':
@@ -79,6 +82,7 @@ class Status:
 
     def error_test(self, tc_id, tc_Message, *save_screenshot):
         self.errorCases.append(tc_id)
+        print(colored(' -> Error\n', 'magenta'))
         if tc_id not in self.test_case_with_result.keys():
             self.test_case_with_result[tc_id] = tc_Message+'_E'
             for ar in save_screenshot:
@@ -95,6 +99,7 @@ class Status:
 
     def info_test(self, tc_id, tc_Message, *save_screenshot):
         self.infoCases.append(tc_id)
+        print(colored(' -> Info\n', 'green'))
         if tc_id not in self.test_case_with_result.keys():
             self.test_case_with_result[tc_id] = tc_Message+'_I'
             for ar in save_screenshot:
@@ -107,6 +112,8 @@ class Status:
             self.test_unit['Module_Name'] = self.module_name
             self.test_unit['Test_cases'] = self.test_case_with_result
             self.test_unit['TimeStamp'] = self.time_stamp
+            with open('replib/test_cases_json/'+self.module_name+'.json', 'w', encoding='utf-8') as f:
+                json.dump(self.test_unit, f, ensure_ascii=False, indent=4)
             self.create_report(self.test_unit, self.module_name)
             self.test_case_with_result.clear()
         except Exception as ex:

@@ -4,7 +4,7 @@ from proj_modules_elements.cbox_elements import *
 
 class CheckboxScreen:
 
-    def start_module(self):
+    def module_start(self):
         log_report().start_module('CheckboxModule')
 
     def tc_001(self):
@@ -29,5 +29,5 @@ class CheckboxScreen:
         except Exception as ex:
             log_report().fail_test(test_case_id(), str(ex), 'T')
 
-    def end_module(self):
+    def module_end(self):
         log_report().end_module()

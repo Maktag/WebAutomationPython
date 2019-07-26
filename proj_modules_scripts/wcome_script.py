@@ -1,12 +1,14 @@
 from proj_setup.common_met import *
 from proj_modules_elements.wcome_elements import *
+from proj_setup.generic_decorators import *
 
 
 class WelcomeScreen:
 
-    def start_module(self):
+    def module_start(self):
         log_report().start_module('WelcomeModule')
 
+    @skip(True)
     def tc_001(self):
         try:
             click_on_web_element(ar_ele)
@@ -29,6 +31,6 @@ class WelcomeScreen:
         except Exception as ex:
             log_report().fail_test(test_case_id(), str(ex), 'T')
 
-    def end_module(self):
+    def module_end(self):
         return_back()
         log_report().end_module()

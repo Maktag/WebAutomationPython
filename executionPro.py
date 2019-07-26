@@ -3,6 +3,7 @@ from proj_modules_scripts import wcome_script
 from proj_modules_scripts import cbox_script
 from proj_setup import base_setup
 
+
 test_modules = [base_setup.Base(),
                 wcome_script.WelcomeScreen(),
                 cbox_script.CheckboxScreen(),

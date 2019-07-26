@@ -14,7 +14,6 @@ class Base:
 
     @singleton
     def report_inst(self):
-        print('Browser is initiating')
         report = Status(Config.Script_version)
         return report
 
